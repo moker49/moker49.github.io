@@ -9,32 +9,23 @@
 </head>
 
 <body>
-    <div class="app">
-        <header>
-            <h1>Dance Move Randomizer</h1>
-        </header>
+    <div class="container">
+        <h1>Dance Move Randomizer</h1>
+        <div class="tabs">
+            <button class="tab-button active" data-tab="randomizer">🎲 Randomizer</button>
+            <button class="tab-button" data-tab="settings">⚙️ Settings</button>
+        </div>
 
-        <main id="tab-randomizer" class="tab-content active">
-            <div class="move-display" id="currentMove">Press “Randomize” to begin!</div>
-            <button id="randomizeBtn" class="primary-btn">🎲 Randomize</button>
-        </main>
+        <div id="randomizer" class="tab-content active">
+            <p id="currentMove" class="move-display">Press “Randomize” to begin!</p>
+            <button id="randomizeBtn">Randomize</button>
+        </div>
 
-        <main id="tab-settings" class="tab-content">
-            <h2>Enabled Moves</h2>
+        <div id="settings" class="tab-content">
+            <h2>Available Moves</h2>
             <div id="moveList"></div>
-            <button id="saveSettings" class="primary-btn">💾 Save</button>
-        </main>
-
-        <nav class="bottom-nav">
-            <button class="nav-btn active" data-tab="tab-randomizer">
-                <span>🎲</span>
-                <p>Randomizer</p>
-            </button>
-            <button class="nav-btn" data-tab="tab-settings">
-                <span>⚙️</span>
-                <p>Settings</p>
-            </button>
-        </nav>
+            <button id="saveSettings">Save Settings</button>
+        </div>
     </div>
 
     <script src="script.js"></script>
