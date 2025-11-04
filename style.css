@@ -13,64 +13,67 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-body {
+html, body {
+  height: 100%;
+  margin: 0;
   background: var(--bg);
   color: var(--text);
   font-family: "Inter", system-ui, sans-serif;
-  margin: 0;
-  display: flex;
-  justify-content: center;
-  align-items: stretch;
-  min-height: 100vh;
+  overflow: hidden;
 }
 
 .app {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  width: 100%;
+  height: 100%;
   max-width: 480px;
-  background: var(--card);
   margin: auto;
+  background: var(--card);
   border-radius: var(--radius);
-  overflow: hidden;
   box-shadow: 0 0 20px rgba(0,0,0,0.4);
+  overflow: hidden;
 }
 
-header {
-  text-align: center;
-  padding: 1.2rem;
+.topbar {
+  position: sticky;
+  top: 0;
   background: rgba(255,255,255,0.05);
+  text-align: center;
+  padding: 1rem;
   border-bottom: 1px solid rgba(255,255,255,0.08);
+  z-index: 100;
 }
 
-h1 {
+.topbar h1 {
   margin: 0;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
+  font-weight: 600;
   color: var(--text);
-  letter-spacing: 0.5px;
 }
 
 .tab-content {
   flex: 1;
-  display: none;
-  flex-direction: column;
-  padding: 1.5rem;
   overflow-y: auto;
+  display: none;
+  scroll-behavior: smooth;
 }
 
 .tab-content.active {
-  display: flex;
+  display: block;
+}
+
+.inner-content {
+  padding: 1.5rem;
+  min-height: calc(100vh - 120px);
 }
 
 .move-display {
   text-align: center;
   font-size: 1.6rem;
   font-weight: 600;
-  margin: auto 0 1.5rem 0;
   color: var(--accent);
+  margin: 3rem 0 2rem;
   transition: opacity var(--transition);
-  min-height: 70px;
 }
 
 .primary-btn {
@@ -80,6 +83,7 @@ h1 {
   border: none;
   border-radius: var(--radius);
   padding: 14px;
+  width: 100%;
   font-size: 1rem;
   cursor: pointer;
   transition: background var(--transition), transform var(--transition);
@@ -102,12 +106,15 @@ h1 {
   margin-right: 10px;
 }
 
-.bottom-nav {
+.navbar {
+  position: sticky;
+  bottom: 0;
   display: flex;
   justify-content: space-around;
   background: rgba(255,255,255,0.05);
   border-top: 1px solid rgba(255,255,255,0.08);
-  padding: 0.3rem 0;
+  padding: 0.4rem 0;
+  z-index: 100;
 }
 
 .nav-btn {

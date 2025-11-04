@@ -2,30 +2,34 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dance Move Randomizer</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
     <div class="app">
-        <header>
+        <header class="topbar">
             <h1>Dance Move Randomizer</h1>
         </header>
 
-        <main id="tab-randomizer" class="tab-content active">
-            <div class="move-display" id="currentMove">Press “Randomize” to begin!</div>
-            <button id="randomizeBtn" class="primary-btn">🎲 Randomize</button>
-        </main>
+        <section id="tab-randomizer" class="tab-content active">
+            <div class="inner-content">
+                <div class="move-display" id="currentMove">Press “Randomize” to begin!</div>
+                <button id="randomizeBtn" class="primary-btn">🎲 Randomize</button>
+            </div>
+        </section>
 
-        <main id="tab-settings" class="tab-content">
-            <h2>Enabled Moves</h2>
-            <div id="moveList"></div>
-            <button id="saveSettings" class="primary-btn">💾 Save</button>
-        </main>
+        <section id="tab-settings" class="tab-content">
+            <div class="inner-content">
+                <h2>Enabled Moves</h2>
+                <div id="moveList"></div>
+                <button id="saveSettings" class="primary-btn">💾 Save</button>
+            </div>
+        </section>
 
-        <nav class="bottom-nav">
+        <nav class="navbar">
             <button class="nav-btn active" data-tab="tab-randomizer">
                 <span>🎲</span>
                 <p>Randomizer</p>
