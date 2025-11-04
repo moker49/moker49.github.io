@@ -10,9 +10,17 @@
 
 <body>
     <div class="app">
+
         <header class="topbar">
-            <h1>Dance Move Randomizer</h1>
+            <h1 id="titleText">Dance Move Randomizer</h1>
+            <button id="sortBtn" title="Change Sort Order">⇅</button>
         </header>
+
+        <div id="sortMenu" class="sort-menu hidden">
+            <button data-sort="alphaAsc">Alphabetical</button>
+            <button data-sort="dateDesc">Newest First</button>
+            <button data-sort="dateAsc">Oldest First</button>
+        </div>
 
         <section id="tab-randomizer" class="tab-content active">
             <div class="randomizer-content">

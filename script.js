@@ -1,6 +1,4 @@
-// Wait until DOM and moveGroups are loaded
 window.addEventListener("DOMContentLoaded", () => {
-    // Flatten all moves into a single object list for storage/reference
     const allMoves = moveGroups.flatMap(g => g.moves);
     let enabledMoves = JSON.parse(localStorage.getItem("enabledMoves")) ||
         Object.fromEntries(allMoves.map(m => [m.name, true]));
@@ -8,52 +6,40 @@ window.addEventListener("DOMContentLoaded", () => {
     const moveListEl = document.getElementById("moveList");
     const randomizeBtn = document.getElementById("randomizeBtn");
     const currentMoveEl = document.getElementById("currentMove");
+    const sortBtn = document.getElementById("sortBtn");
+    const sortMenu = document.getElementById("sortMenu");
+    const titleText = document.getElementById("titleText");
 
-    let sortMode = localStorage.getItem("sortMode") || "alphabetical";
+    const sortModes = {
+        alphaAsc: { label: "Alphabetical", fn: (a, b) => a.name.localeCompare(b.name) },
+        dateDesc: { label: "Newest First", fn: (a, b) => new Date(b.date) - new Date(a.date) },
+        dateAsc: { label: "Oldest First", fn: (a, b) => new Date(a.date) - new Date(b.date) },
+    };
 
-    // Render grouped move checklist
+    let currentSort = localStorage.getItem("sortMode") || "alphaAsc";
+
     function renderMoveList() {
-        moveListEl.innerHTML = `
-      <div class="sort-bar">
-        <label>Sort by:</label>
-        <select id="sortSelect">
-          <option value="alphabetical" ${sortMode === "alphabetical" ? "selected" : ""}>Alphabetical</option>
-          <option value="date" ${sortMode === "date" ? "selected" : ""}>Date</option>
-        </select>
-      </div>
-    `;
-
+        moveListEl.innerHTML = "";
         moveGroups.forEach(group => {
-            const sortedMoves = [...group.moves].sort((a, b) => {
-                if (sortMode === "date") return new Date(a.date) - new Date(b.date);
-                return a.name.localeCompare(b.name);
-            });
-
-            const groupHTML = `
+            const sorted = [...group.moves].sort(sortModes[currentSort].fn);
+            const html = `
         <div class="move-group">
           <h3>${group.name}</h3>
-          ${sortedMoves
-                    .map(
-                        m => `<label>
-                      <input type="checkbox" data-move="${m.name}" ${enabledMoves[m.name] ? "checked" : ""}>
-                      ${m.name}
-                    </label>`
-                    )
-                    .join("")}
-        </div>`;
-            moveListEl.insertAdjacentHTML("beforeend", groupHTML);
-        });
-
-        document.getElementById("sortSelect").addEventListener("change", e => {
-            sortMode = e.target.value;
-            localStorage.setItem("sortMode", sortMode);
-            renderMoveList();
+          ${sorted.map(m => `
+            <label>
+              <input type="checkbox" data-move="${m.name}" ${enabledMoves[m.name] ? "checked" : ""}>
+              ${m.name}
+            </label>
+          `).join("")}
+        </div>
+      `;
+            moveListEl.insertAdjacentHTML("beforeend", html);
         });
     }
 
     renderMoveList();
 
-    // Auto-save when user toggles a checkbox
+    // Auto-save on checkbox change
     moveListEl.addEventListener("change", e => {
         if (e.target.matches("input[type='checkbox']")) {
             const move = e.target.dataset.move;
@@ -64,16 +50,14 @@ window.addEventListener("DOMContentLoaded", () => {
 
     // Randomizer
     randomizeBtn.addEventListener("click", () => {
-        const activeMoves = Object.entries(enabledMoves)
+        const active = Object.entries(enabledMoves)
             .filter(([_, v]) => v)
             .map(([name]) => name);
-
-        if (activeMoves.length === 0) {
+        if (!active.length) {
             currentMoveEl.textContent = "No moves selected!";
             return;
         }
-
-        const move = activeMoves[Math.floor(Math.random() * activeMoves.length)];
+        const move = active[Math.floor(Math.random() * active.length)];
         currentMoveEl.style.opacity = 0;
         setTimeout(() => {
             currentMoveEl.textContent = move;
@@ -87,7 +71,39 @@ window.addEventListener("DOMContentLoaded", () => {
             document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
             document.querySelectorAll(".tab-content").forEach(t => t.classList.remove("active"));
             btn.classList.add("active");
-            document.getElementById(btn.dataset.tab).classList.add("active");
+
+            const tab = btn.dataset.tab;
+            document.getElementById(tab).classList.add("active");
+
+            if (tab === "tab-settings") {
+                sortBtn.style.visibility = "visible";
+            } else {
+                sortBtn.style.visibility = "hidden";
+                sortMenu.classList.add("hidden");
+            }
         });
+    });
+
+    // Sort menu toggle
+    sortBtn.addEventListener("click", e => {
+        e.stopPropagation();
+        sortMenu.classList.toggle("hidden");
+    });
+
+    // Select sort mode
+    sortMenu.addEventListener("click", e => {
+        if (e.target.matches("button[data-sort]")) {
+            currentSort = e.target.dataset.sort;
+            localStorage.setItem("sortMode", currentSort);
+            renderMoveList();
+            sortMenu.classList.add("hidden");
+        }
+    });
+
+    // Hide menu when clicking elsewhere
+    document.addEventListener("click", e => {
+        if (!sortMenu.classList.contains("hidden")) {
+            sortMenu.classList.add("hidden");
+        }
     });
 });
