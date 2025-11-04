@@ -54,28 +54,61 @@ window.addEventListener("DOMContentLoaded", () => {
 
     function renderMoveList() {
         moveListEl.innerHTML = "";
+
+        // Load category collapse states
+        const collapsedGroups = JSON.parse(localStorage.getItem("collapsedGroups")) || {};
+
         moveGroups.forEach(group => {
+            const isCollapsed = collapsedGroups[group.name] || false;
+
             const sorted = [...group.moves].sort(sortModes[currentSort].fn);
-            const html = `
-      <div class="move-group">
-        <h3>${group.name}</h3>
-        ${sorted
+            const groupHTML = `
+      <div class="move-group ${isCollapsed ? "collapsed" : ""}" data-group="${group.name}">
+        <h3 class="group-header ${isCollapsed ? "collapsed" : ""}">
+          ${group.name}
+          <span class="material-symbols-rounded collapse-icon">
+            ${isCollapsed ? "expand_more" : "expand_less"}
+          </span>
+        </h3>
+        <div class="group-moves" style="display:${isCollapsed ? "none" : "block"}">
+          ${sorted
                     .map(
                         m => `
-            <label class="move-item">
-              <div class="checkbox-wrapper">
-                <input type="checkbox" data-move="${m.name}" ${enabledMoves[m.name] ? "checked" : ""}>
-                <span class="checkbox-custom"></span>
-              </div>
-              <span class="move-name">${m.name}</span>
-              <span class="move-date">${m.date ? new Date(m.date).toLocaleDateString() : "—"}</span>
-            </label>`
+                <label class="move-item">
+                  <div class="checkbox-wrapper">
+                    <input type="checkbox" data-move="${m.name}" ${enabledMoves[m.name] ? "checked" : ""}>
+                    <span class="checkbox-custom"></span>
+                  </div>
+                  <span class="move-name">${m.name}</span>
+                  <span class="move-date">${m.date ? new Date(m.date).toLocaleDateString() : "—"}</span>
+                </label>`
                     )
                     .join("")}
+        </div>
       </div>`;
-            moveListEl.insertAdjacentHTML("beforeend", html);
+            moveListEl.insertAdjacentHTML("beforeend", groupHTML);
+        });
+
+        // --- Toggle collapse on header click ---
+        document.querySelectorAll(".group-header").forEach(header => {
+            header.addEventListener("click", () => {
+                const groupEl = header.closest(".move-group");
+                const groupName = groupEl.dataset.group;
+                const movesEl = groupEl.querySelector(".group-moves");
+                const iconEl = header.querySelector(".collapse-icon");
+                const collapsedGroups = JSON.parse(localStorage.getItem("collapsedGroups")) || {};
+
+                const isCollapsed = groupEl.classList.toggle("collapsed");
+                movesEl.style.display = isCollapsed ? "none" : "block";
+                header.classList.toggle("collapsed", isCollapsed);
+                iconEl.textContent = isCollapsed ? "expand_more" : "expand_less";
+
+                collapsedGroups[groupName] = isCollapsed;
+                localStorage.setItem("collapsedGroups", JSON.stringify(collapsedGroups));
+            });
         });
     }
+
 
 
     renderMoveList();
@@ -91,20 +124,28 @@ window.addEventListener("DOMContentLoaded", () => {
 
     // Randomizer
     randomizeBtn.addEventListener("click", () => {
-        const active = Object.entries(enabledMoves)
-            .filter(([_, v]) => v)
-            .map(([name]) => name);
-        if (!active.length) {
+        const collapsedGroups = JSON.parse(localStorage.getItem("collapsedGroups")) || {};
+
+        // Collect only moves from non-collapsed groups
+        const activeMoves = moveGroups
+            .filter(g => !collapsedGroups[g.name])
+            .flatMap(g => g.moves)
+            .filter(m => enabledMoves[m.name])
+            .map(m => m.name);
+
+        if (activeMoves.length === 0) {
             currentMoveEl.textContent = "No moves selected!";
             return;
         }
-        const move = active[Math.floor(Math.random() * active.length)];
+
+        const move = activeMoves[Math.floor(Math.random() * activeMoves.length)];
         currentMoveEl.style.opacity = 0;
         setTimeout(() => {
             currentMoveEl.textContent = move;
             currentMoveEl.style.opacity = 1;
         }, 150);
     });
+
 
     // Tab switching
     document.querySelectorAll(".nav-btn").forEach(btn => {

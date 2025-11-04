@@ -333,6 +333,34 @@ body {
   margin-left: 10px;
 }
 
+/* ----- Collapsible Groups ----- */
+.group-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  transition: color var(--transition);
+  color: var(--accent);
+}
+
+.group-header:hover {
+  color: #66d3ff;
+}
+
+.group-header.collapsed {
+  color: var(--muted);
+}
+
+.collapse-icon {
+  font-size: 1.4rem;
+  transition: transform var(--transition);
+}
+
+.move-group.collapsed .collapse-icon {
+  transform: rotate(180deg);
+}
+
 /* ---------- Navbar ---------- */
 .navbar {
   flex: 0 0 auto;
