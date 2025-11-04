@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dance Move Randomizer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="app">
+        <header>
+            <h1>Dance Move Randomizer</h1>
+        </header>
+
+        <main id="tab-randomizer" class="tab-content active">
+            <div class="move-display" id="currentMove">Press “Randomize” to begin!</div>
+            <button id="randomizeBtn" class="primary-btn">🎲 Randomize</button>
+        </main>
+
+        <main id="tab-settings" class="tab-content">
+            <h2>Enabled Moves</h2>
+            <div id="moveList"></div>
+            <button id="saveSettings" class="primary-btn">💾 Save</button>
+        </main>
+
+        <nav class="bottom-nav">
+            <button class="nav-btn active" data-tab="tab-randomizer">
+                <span>🎲</span>
+                <p>Randomizer</p>
+            </button>
+            <button class="nav-btn" data-tab="tab-settings">
+                <span>⚙️</span>
+                <p>Settings</p>
+            </button>
+        </nav>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
