@@ -1,18 +1,15 @@
 :root {
-  /* Core palette */
-  --bg: #0f1115;
-  --card: #1b1e24;
-  --text: #e6e9ef;
-  --muted: #9098a6;
-  --accent: #00b7ff;
-
-  /* States / borders (match what you already used) */
-  --accent-pressed: #0095d8;
-  --border: rgba(255, 255, 255, 0.08);
-  --border-soft: rgba(255, 255, 255, 0.06);
-  --elev-05: rgba(255, 255, 255, 0.05);
-  --elev-10: rgba(255, 255, 255, 0.10);
-  --hover: rgba(255, 255, 255, 0.08);
+  --bg: #0e0a1b;
+  --card: #181129;
+  --text: #ebe6f8;
+  --muted: #a99fbb;
+  --accent: #b46aff;
+  --accent-pressed: #9952e8;
+  --border: rgba(255,255,255,0.08);
+  --border-soft: rgba(255,255,255,0.06);
+  --elev-05: rgba(255,255,255,0.05);
+  --elev-10: rgba(255,255,255,0.10);
+  --hover: rgba(255,255,255,0.08);
   --transition: 0.25s ease;
 }
 

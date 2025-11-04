@@ -161,7 +161,7 @@ window.addEventListener("DOMContentLoaded", () => {
         lastRandomMove = moveObj.name;
 
         let displayName = moveObj.name;
-        if (semiEnabled && moveObj.semi && Math.random() < 0.40) {
+        if (semiEnabled && moveObj.semi && Math.random() < 0.50) {
             displayName += " (semi)";
         }
 
