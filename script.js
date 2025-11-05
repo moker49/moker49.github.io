@@ -164,6 +164,14 @@ window.addEventListener("DOMContentLoaded", () => {
     // --- Randomizer logic ---
     let lastRandomMove = null;
     randomizeBtn.addEventListener("click", () => {
+        // animation
+        const icon = randomizeBtn.querySelector(".material-symbols-rounded");
+        if (icon) {
+            icon.classList.remove("spin");
+            void icon.offsetWidth; // force reflow so animation restarts
+            icon.classList.add("spin");
+        }
+
         const collapsedGroups = JSON.parse(localStorage.getItem("collapsedGroups")) || {};
 
         const activeMoves = moveGroups

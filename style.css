@@ -478,3 +478,13 @@ body {
     margin-top: 40px;
   }
 }
+
+/* --- Spin animation for the randomize icon --- */
+@keyframes spin-once {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(180deg); }
+}
+
+.spin {
+  animation: spin-once 0.5s ease;
+}
