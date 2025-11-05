@@ -217,6 +217,10 @@ window.addEventListener("DOMContentLoaded", () => {
             const tab = btn.dataset.tab;
             document.getElementById(tab).classList.add("active");
 
+            // Stop any leftover spin animation when switching tabs
+            const icon = randomizeBtn.querySelector(".material-symbols-rounded");
+            if (icon) icon.classList.remove("spin");
+
             if (tab === "tab-settings") {
                 sortBtn.style.visibility = "visible";
             } else {
