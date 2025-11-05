@@ -5,20 +5,43 @@ window.addEventListener("DOMContentLoaded", () => {
 
     // --- Load saved moves, clean up, and merge defaults ---
     let savedMoves = JSON.parse(localStorage.getItem("enabledMoves")) || {};
+    let savedMeta = JSON.parse(localStorage.getItem("moveMeta")) || {};
     let enabledMoves = {};
+    let newMeta = {}; // we'll rebuild this fresh
 
     // Keep only valid moves and fill missing ones
     for (const move of allMoves) {
-        if (move.name in savedMoves) {
-            enabledMoves[move.name] = savedMoves[move.name];
+        const wasSaved = move.name in savedMoves;
+        const previouslyEnabled = savedMoves[move.name];
+        const prev = savedMeta[move.name] || {};
+
+        const hasDate = !!move.date;
+        const hasCategory = !!move.category;
+
+        // detect if a date or category was newly added
+        const dateWasAdded = hasDate && !prev.date;
+        const categoryWasAdded = hasCategory && !prev.category;
+        const autoEnable = dateWasAdded || categoryWasAdded;
+
+        if (!wasSaved) {
+            // New move: enabled if it already has a date
+            enabledMoves[move.name] = hasDate;
+        } else if (autoEnable) {
+            // Metadata was added since last load → force-enable
+            enabledMoves[move.name] = true;
         } else {
-            // New move — enabled if it has a date
-            enabledMoves[move.name] = !!move.date;
+            // Otherwise preserve user’s previous choice
+            enabledMoves[move.name] = previouslyEnabled;
         }
+
+        // Save new metadata snapshot for next comparison
+        newMeta[move.name] = { date: hasDate, category: hasCategory };
     }
 
     // Save the cleaned version back to storage
     localStorage.setItem("enabledMoves", JSON.stringify(enabledMoves));
+    localStorage.setItem("moveMeta", JSON.stringify(newMeta));
+
 
     const moveListEl = document.getElementById("moveList");
     const randomizeBtn = document.getElementById("randomizeBtn");

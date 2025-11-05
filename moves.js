@@ -28,8 +28,9 @@ const moveGroups = [
         name: "Advanced",
         moves: [
             { name: "Downtown", semi: true, date: '2025-10-11T12:00:00' },
-            { name: "Downtown with a Turn", semi: false, date: '2025-10-25T12:00:00' },
+            { name: "Downtown with a Turn", semi: true, date: '2025-10-25T12:00:00' },
             { name: "Four Tap V", semi: false, date: '2025-10-29T12:00:00' },
+            { name: "Hook Flick", semi: true, date: '2025-11-04T12:00:00' },
             { name: "Inverted Suzy Plus", semi: false, date: '2025-10-25T12:00:00' },
             { name: "Left Front Double Cross", semi: false, date: '2025-11-01T12:00:00' },
             { name: "Right Front Double Cross", semi: false, date: '2025-11-01T12:00:00' },
@@ -96,7 +97,6 @@ const moveGroups = [
             { name: "Forward Crossover", semi: false, date: null },
             { name: "Forward Crossover Suzy Q", semi: false, date: null },
             { name: "Forward Crossover Left Front Double Cross Suzy Q", semi: false, date: null },
-            { name: "Hook Flick", semi: false, date: null },
             { name: "Hot Toe Combo", semi: false, date: null },
             { name: "Hunts Point", semi: false, date: null },
             { name: "Lateral Cutaway", semi: false, date: null },

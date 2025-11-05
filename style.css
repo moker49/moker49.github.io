@@ -345,10 +345,6 @@ body {
   color: var(--accent);
 }
 
-.group-header:hover {
-  color: #66d3ff;
-}
-
 .group-header.collapsed {
   color: var(--muted);
 }
