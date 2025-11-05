@@ -94,11 +94,13 @@ window.addEventListener("DOMContentLoaded", () => {
 
         moveGroups.forEach(group => {
             const collapsedGroups = JSON.parse(localStorage.getItem("collapsedGroups")) || {};
-            const isUncategorized = !group.name || group.name.toLowerCase() === "uncategorized";
-            const isPartnerwork = !group.name || group.name.toLowerCase().includes("men's");
 
-            if (!(group.name in collapsedGroups) && (isUncategorized || isPartnerwork)) {
-                collapsedGroups[group.name] = true;
+            // determine if group name includes "Advanced"
+            const isAdvanced = group.name && group.name.toLowerCase().includes("advanced");
+
+            // if no saved state, collapse by default unless it's Advanced
+            if (!(group.name in collapsedGroups)) {
+                collapsedGroups[group.name] = !isAdvanced; // collapsed unless advanced
                 localStorage.setItem("collapsedGroups", JSON.stringify(collapsedGroups));
             }
 
@@ -106,31 +108,37 @@ window.addEventListener("DOMContentLoaded", () => {
             const sorted = [...group.moves].sort(sortModes[currentSort].fn);
 
             const groupHTML = `
-                <div class="move-group ${isCollapsed ? "collapsed" : ""}" data-group="${group.name}">
-                    <h3 class="group-header ${isCollapsed ? "collapsed" : ""}">
-                        ${group.name}
-                        <span class="material-symbols-rounded collapse-icon">
-                            expand_less
+        <div class="move-group ${isCollapsed ? "collapsed" : ""}" data-group="${group.name}">
+            <h3 class="group-header ${isCollapsed ? "collapsed" : ""}">
+                ${group.name}
+                <span class="material-symbols-rounded collapse-icon">expand_less</span>
+            </h3>
+            <div class="group-moves" style="display:${isCollapsed ? "none" : "block"}">
+                ${sorted
+                    .map(
+                        m => `
+                    <label class="move-item">
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" data-move="${m.name}" ${enabledMoves[m.name] ? "checked" : ""}>
+                            <span class="checkbox-custom"></span>
+                        </div>
+                        <span class="move-name">${m.name}</span>
+                        <span class="move-date">
+                            ${m.date
+                                ? new Date(m.date).toLocaleDateString("en-US", {
+                                    month: "2-digit",
+                                    day: "2-digit"
+                                })
+                                : "—"}
                         </span>
-                    </h3>
-                    <div class="group-moves" style="display:${isCollapsed ? "none" : "block"}">
-                        ${sorted.map(m => `
-                            <label class="move-item">
-                                <div class="checkbox-wrapper">
-                                    <input type="checkbox" data-move="${m.name}" ${enabledMoves[m.name] ? "checked" : ""}>
-                                    <span class="checkbox-custom"></span>
-                                </div>
-                                <span class="move-name">${m.name}</span>
-                                <span class="move-date">
-                                    ${m.date
-                    ? new Date(m.date).toLocaleDateString("en-US", { month: "2-digit", day: "2-digit" })
-                    : "—"}
-                                </span>
-                            </label>`).join("")}
-                    </div>
-                </div>`;
+                    </label>`
+                    )
+                    .join("")}
+            </div>
+        </div>`;
             moveListEl.insertAdjacentHTML("beforeend", groupHTML);
         });
+
 
         // Collapse toggle behavior
         document.querySelectorAll(".group-header").forEach(header => {
