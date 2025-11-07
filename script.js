@@ -115,9 +115,12 @@ window.addEventListener("DOMContentLoaded", () => {
 
             const groupHTML = `
         <div class="move-group ${isCollapsed ? "collapsed" : ""}" data-group="${group.name}">
-            <h3 class="group-header ${isCollapsed ? "collapsed" : ""}">
-                ${group.name}
+            <h3 class="group-header ${isCollapsed ? "collapsed" : ""}" data-group="${group.name}">
+            ${group.name}
+            <div class="group-actions">
+                <span class="material-symbols-rounded toggle-group" title="Toggle all">select_all</span>
                 <span class="material-symbols-rounded collapse-icon">expand_less</span>
+            </div>
             </h3>
             <div class="group-moves" style="display:${isCollapsed ? "none" : "block"}">
                 ${sorted
@@ -148,7 +151,12 @@ window.addEventListener("DOMContentLoaded", () => {
 
         // Collapse toggle behavior
         document.querySelectorAll(".group-header").forEach(header => {
-            header.addEventListener("click", () => {
+            header.addEventListener("click", (e) => {
+                const header = e.target.closest(".group-header");
+                if (!header) return;
+
+                // if click was on the toggle-all icon (or the actions container), do nothing
+                if (e.target.closest(".toggle-group") || e.target.closest(".group-actions")) return;
                 const groupEl = header.closest(".move-group");
                 const groupName = groupEl.dataset.group;
                 const movesEl = groupEl.querySelector(".group-moves");
@@ -173,6 +181,31 @@ window.addEventListener("DOMContentLoaded", () => {
             enabledMoves[move] = e.target.checked;
             localStorage.setItem("enabledMoves", JSON.stringify(enabledMoves));
         }
+    });
+
+    // --- Toggle entire category ---
+    document.addEventListener("click", (e) => {
+        const toggle = e.target.closest(".toggle-group");
+        if (!toggle) return;
+
+        // prevent the document's other click handlers (like collapse) from running
+        e.stopImmediatePropagation();
+        e.preventDefault();
+
+        const header = toggle.closest(".group-header");
+        const groupName = header?.dataset.group;
+        const group = moveGroups.find(g => g.name === groupName);
+        if (!group) return;
+
+        group.moves.forEach(m => {
+            const cb = document.querySelector(`input[data-move="${m.name}"]`);
+            if (cb) {
+                cb.checked = !cb.checked;
+                enabledMoves[m.name] = cb.checked; // ✅ keep the data model in sync
+            }
+        });
+
+        localStorage.setItem("enabledMoves", JSON.stringify(enabledMoves));
     });
 
     if (!localStorage.getItem("randomizeUsed")) {

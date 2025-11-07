@@ -362,6 +362,29 @@ body {
   color: var(--muted);
 }
 
+.group-actions {
+  display: flex;
+  align-items: center;
+}
+
+.group-actions > * {
+  padding: 0.2rem 0.4rem;
+}
+
+.toggle-group {
+  font-size: 1.3rem;
+  opacity: 0;
+  cursor: pointer;
+  transform: translateX(75%);
+  transition: opacity var(--transition), transform var(--transition);
+  color: var(--text-secondary);
+}
+
+.group-header:not(.collapsed) .toggle-group {
+  opacity: 1;
+  transform: translateX(0%);
+}
+
 .collapse-icon {
   font-size: 1.4rem;
   transition: transform var(--transition-material);
