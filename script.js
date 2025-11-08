@@ -122,7 +122,7 @@ window.addEventListener("DOMContentLoaded", () => {
                 <span class="material-symbols-rounded collapse-icon">expand_less</span>
             </div>
             </h3>
-            <div class="group-moves" style="display:${isCollapsed ? "none" : "block"}">
+            <div class="group-moves${isCollapsed ? "" : " expanded"}">
                 ${sorted
                     .map(
                         m => `
@@ -148,6 +148,16 @@ window.addEventListener("DOMContentLoaded", () => {
             moveListEl.insertAdjacentHTML("beforeend", groupHTML);
         });
 
+        function toggleHeight(el, expand) {
+            if (expand) {
+                const endHeight = el.scrollHeight; // exact pixel height
+                el.style.height = endHeight + "px";
+            } else {
+                el.style.height = el.scrollHeight + "px"; // set current height
+                el.offsetHeight; // force reflow
+                el.style.height = "0";
+            }
+        }
 
         // Collapse toggle behavior
         document.querySelectorAll(".group-header").forEach(header => {
@@ -163,13 +173,26 @@ window.addEventListener("DOMContentLoaded", () => {
                 const collapsedGroups = JSON.parse(localStorage.getItem("collapsedGroups")) || {};
 
                 const isCollapsed = groupEl.classList.toggle("collapsed");
-                movesEl.style.display = isCollapsed ? "none" : "block";
+                // movesEl.style.display = isCollapsed ? "block" : "block";
                 header.classList.toggle("collapsed", isCollapsed);
+
+                movesEl.classList.toggle("expanded", !isCollapsed);
+                toggleHeight(movesEl, !isCollapsed);
 
                 collapsedGroups[groupName] = isCollapsed;
                 localStorage.setItem("collapsedGroups", JSON.stringify(collapsedGroups));
             });
         });
+
+        const expandedEls = document.querySelectorAll(".group-moves.expanded");
+        expandedEls.forEach(el => {
+            const prev = el.style.transition;
+            el.style.transition = "none";
+            el.style.height = "auto";
+            el.offsetHeight;
+            el.style.transition = prev;
+        });
+
     }
 
     renderMoveList();
