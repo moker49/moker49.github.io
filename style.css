@@ -95,7 +95,7 @@ body {
 }
 
 .topbar-btn:active {
-  transform: scale(0.92);
+  transform: scale(0.9);
 }
 
 /* keep your original visibility behavior */
@@ -114,11 +114,15 @@ body {
   box-shadow: 0 4px 12px rgba(0,0,0,0.4);
   display: flex;
   flex-direction: column;
+  opacity: 1;
+  transform: translateX(0%);
+  transition: all var(--transition);
   z-index: 150;
 }
 
 .sort-menu.hidden {
-  display: none;
+  opacity: 0;
+  transform: translateX(10%);
 }
 
 .sort-menu button {
