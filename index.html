@@ -49,6 +49,16 @@
             <button id="randomizeBtn" class="fab-btn" title="Randomize">
                 <span class="material-symbols-rounded">refresh</span>
             </button>
+        </section>
+
+        <section id="tab-settings" class="tab-content">
+            <div class="inner-content">
+                <div id="moveList"></div>
+            </div>
+
+        </section>
+
+        <div class="footer-wrapper">
             <div class="semi-toggle-container">
                 <label class="semi-toggle-label">
                     <span class="toggle-text">Semi</span>
@@ -59,24 +69,18 @@
                     </div>
                 </label>
             </div>
-        </section>
 
-        <section id="tab-settings" class="tab-content">
-            <div class="inner-content">
-                <div id="moveList"></div>
-            </div>
-        </section>
-
-        <nav class="navbar">
-            <button class="nav-btn active" data-tab="tab-randomizer">
-                <span class="material-symbols-rounded">home</span>
-                <p class="nav-label">Spin</p>
-            </button>
-            <button class="nav-btn" data-tab="tab-settings">
-                <span class="material-symbols-rounded">filter_list</span>
-                <p class="nav-label">Filter</p>
-            </button>
-        </nav>
+            <nav class="navbar">
+                <button class="nav-btn active" data-tab="tab-randomizer">
+                    <span class="material-symbols-rounded">speed</span>
+                    <p class="nav-label">Spin</p>
+                </button>
+                <button class="nav-btn" data-tab="tab-settings">
+                    <span class="material-symbols-rounded">settings</span>
+                    <p class="nav-label">Settings</p>
+                </button>
+            </nav>
+        </div>
     </div>
 
     <script src="moves.js"></script>

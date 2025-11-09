@@ -239,13 +239,6 @@ window.addEventListener("DOMContentLoaded", () => {
         randomizeBtn.classList.add("first-time");
     }
 
-    const semiUnlocked = localStorage.getItem("semiUnlocked") ?? "false";
-    if (semiUnlocked === "true") {
-        semiContainer.classList.add("visible");
-    }
-
-    let randomizeCount = 0;
-
     function pulseHighlight(target) {
         target.removeEventListener("animationend", handleAnimationEnd);
         target.classList.remove("highlight");
@@ -273,14 +266,6 @@ window.addEventListener("DOMContentLoaded", () => {
         if (!localStorage.getItem("randomizeUsed")) {
             localStorage.setItem("randomizeUsed", "true");
             randomizeBtn.classList.remove("first-time");
-        }
-
-        randomizeCount++;
-
-        // reveal semi toggle after 4 presses
-        if (randomizeCount === 4 && semiContainer) {
-            semiContainer.classList.add("visible");
-            localStorage.setItem("semiUnlocked", "true");
         }
 
         const collapsedGroups = JSON.parse(localStorage.getItem("collapsedGroups")) || {};
@@ -315,7 +300,7 @@ window.addEventListener("DOMContentLoaded", () => {
         lastRandomMove = moveObj.name;
 
         let displayName = moveObj.name;
-        let chance = semiEnabled === "full" ? 1.0 : semiEnabled === "true" ? 0.5 : 0.0;
+        let chance = semiEnabled === "full" ? 1.0 : semiEnabled === "true" ? 0.35 : 0.0;
         if (semiEnabled && moveObj.semi && Math.random() < chance) {
             displayName += " (semi)";
         }
@@ -330,10 +315,12 @@ window.addEventListener("DOMContentLoaded", () => {
     // --- Tab switching ---
     document.querySelectorAll(".nav-btn").forEach(btn => {
         btn.addEventListener("click", () => {
+            // reset nav + tabs
             document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
             document.querySelectorAll(".tab-content").forEach(t => t.classList.remove("active"));
             btn.classList.add("active");
 
+            // activate tab
             const tab = btn.dataset.tab;
             document.getElementById(tab).classList.add("active");
 
@@ -341,11 +328,16 @@ window.addEventListener("DOMContentLoaded", () => {
             const icon = randomizeBtn.querySelector(".material-symbols-rounded");
             if (icon) icon.classList.remove("spin");
 
+            // sort button visibility
             if (tab === "tab-settings") {
                 sortBtn.style.visibility = "visible";
+                // show semi container
+                semiContainer.classList.add("visible");
             } else {
                 sortBtn.style.visibility = "hidden";
                 sortMenu.classList.add("hidden");
+                // hide semi container
+                semiContainer.classList.remove("visible");
             }
         });
     });
