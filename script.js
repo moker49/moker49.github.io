@@ -73,7 +73,13 @@ window.addEventListener("DOMContentLoaded", () => {
         semiButtons.forEach(b => b.classList.toggle("active", b.dataset.value === semiEnabled));
     }
 
-    let showGrouped = true;
+    let showGrouped = localStorage.getItem("showGrouped");
+    if (showGrouped === null) {
+        showGrouped = true;
+    } else {
+        showGrouped = showGrouped === "true";
+    }
+
     groupToggleBtn.addEventListener("click", () => {
         showGrouped = !showGrouped;
         localStorage.setItem("showGrouped", showGrouped);
@@ -245,15 +251,24 @@ window.addEventListener("DOMContentLoaded", () => {
         e.stopImmediatePropagation();
         e.preventDefault();
 
-        const header = toggle.closest(".group-header");
-        const groupName = header?.dataset.group;
-        const group = moveGroups.find(g => g.name === groupName);
-        if (!group) return;
+        const groupHeader = toggle.closest(".group-header");
+        if (!groupHeader) return;
 
-        const allChecked = group.moves.every(m => enabledMoves[m.name]);
+        const groupName = groupHeader.dataset.group;
+        let movesToToggle = [];
+
+        if (groupName === "all") {
+            movesToToggle = moveGroups.flatMap(g => g.moves);
+        } else {
+            const group = moveGroups.find(g => g.name === groupName);
+            if (!group) return;
+            movesToToggle = group.moves;
+        }
+
+        const allChecked = movesToToggle.every(m => enabledMoves[m.name]);
         const newState = !allChecked;
 
-        group.moves.forEach(m => {
+        movesToToggle.forEach(m => {
             const cb = document.querySelector(`input[data-move="${m.name}"]`);
             if (cb) {
                 cb.checked = newState;

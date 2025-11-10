@@ -62,7 +62,7 @@ const moveGroups = [
         moves: [
             { name: "Broken Left Turn", semi: false, date: null },
             { name: "Copa", semi: false, date: null },
-            { name: "Cross Body Lead", semi: false, date: '2025-10-18T12:00:00' },
+            { name: "Cross Body Lead (F)", semi: false, date: '2025-10-18T12:00:00' },
             { name: "Inside Left", semi: false, date: '2025-10-25T12:00:00' },
             { name: "Right Turn", semi: false, date: '2025-10-14T12:00:00' }
         ]
@@ -76,7 +76,7 @@ const moveGroups = [
             { name: "CBL (double pump)", semi: false, date: '2025-11-08T12:00:00' },
             { name: "CBL (figure 8)", semi: false, date: '2025-11-05T12:00:00' },
             { name: "CBL (inside left)", semi: false, date: '2025-10-25T12:00:00' },
-            { name: "Cross Body Lead", semi: false, date: '2025-10-18T12:00:00' },
+            { name: "Cross Body Lead (M)", semi: false, date: '2025-10-18T12:00:00' },
             { name: "Full Axle Right Turn", semi: false, date: '2025-10-22T12:00:00' },
             { name: "Half Right Half Left", semi: false, date: '2025-10-15T12:00:00' },
             { name: "Half Left Back Charge", semi: false, date: null },
