@@ -191,27 +191,32 @@ window.addEventListener("DOMContentLoaded", () => {
 
         // Collapse toggle behavior
         document.querySelectorAll(".group-header").forEach(header => {
-            header.addEventListener("click", (e) => {
-                const header = e.target.closest(".group-header");
-                if (!header) return;
-                if (header.dataset.group === "all") return;
+            header.addEventListener("click", e => {
+                const headerEl = e.target.closest(".group-header");
+                if (!headerEl) return;
+                if (headerEl.dataset.group === "all") return;
 
-                // if click was on the toggle-all icon (or the actions container), do nothing
-                if (e.target.closest(".toggle-group") || e.target.closest(".group-actions")) return;
-                const groupEl = header.closest(".move-group");
-                const groupName = groupEl.dataset.group;
+                const collapseIcon = e.target.closest(".collapse-icon");
+                const toggleGroupBtn = e.target.closest(".toggle-group");
+
+                // Clicking the toggle-all icon still does nothing (as before)
+                if (toggleGroupBtn) return;
+
+                const groupEl = headerEl.closest(".move-group");
                 const movesEl = groupEl.querySelector(".group-moves");
+                const groupName = groupEl.dataset.group;
                 const collapsedGroups = JSON.parse(localStorage.getItem("collapsedGroups")) || {};
 
-                const isCollapsed = groupEl.classList.toggle("collapsed");
-                // movesEl.style.display = isCollapsed ? "block" : "block";
-                header.classList.toggle("collapsed", isCollapsed);
+                // If clicked on collapse icon or anywhere on header → toggle collapse
+                if (collapseIcon || headerEl) {
+                    const isCollapsed = groupEl.classList.toggle("collapsed");
+                    headerEl.classList.toggle("collapsed", isCollapsed);
+                    movesEl.classList.toggle("expanded", !isCollapsed);
+                    toggleHeight(movesEl, !isCollapsed);
 
-                movesEl.classList.toggle("expanded", !isCollapsed);
-                toggleHeight(movesEl, !isCollapsed);
-
-                collapsedGroups[groupName] = isCollapsed;
-                localStorage.setItem("collapsedGroups", JSON.stringify(collapsedGroups));
+                    collapsedGroups[groupName] = isCollapsed;
+                    localStorage.setItem("collapsedGroups", JSON.stringify(collapsedGroups));
+                }
             });
         });
 
