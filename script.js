@@ -49,6 +49,7 @@ window.addEventListener("DOMContentLoaded", () => {
     const sortMenu = document.getElementById("sortMenu");
     const semiButtons = document.querySelectorAll(".semi-toggle-group .md3-segment");
     const semiContainer = document.querySelector(".semi-toggle-container");
+    const groupToggleBtn = document.getElementById("groupToggleBtn");
     const introMessages = [
         "Hit the beat!",
         "Kick it off!",
@@ -96,40 +97,81 @@ window.addEventListener("DOMContentLoaded", () => {
         semiButtons.forEach(b => b.classList.toggle("active", b.dataset.value === semiEnabled));
     }
 
+    let showGrouped = true;
+    groupToggleBtn.addEventListener("click", () => {
+        showGrouped = !showGrouped;
+        localStorage.setItem("showGrouped", showGrouped);
+        renderMoveList();
+        // updateGroupToggleIcon();
+    });
+
+    function updateGroupToggleIcon() {
+        const icon = groupToggleBtn.querySelector(".material-symbols-rounded");
+        icon.textContent = showGrouped ? "format_list_bulleted" : "table_rows";
+        groupToggleBtn.title = showGrouped ? "Show all moves" : "Show grouped";
+    }
+
     // --- Render the move list ---
     function renderMoveList() {
         moveListEl.innerHTML = "";
 
-        moveGroups.forEach(group => {
-            const collapsedGroups = JSON.parse(localStorage.getItem("collapsedGroups")) || {};
+        if (showGrouped) {
+            moveGroups.forEach(group => {
+                const collapsedGroups = JSON.parse(localStorage.getItem("collapsedGroups")) || {};
+                const isAdvanced = group.name && group.name.toLowerCase().includes("advanced");
 
-            // determine if group name includes "Advanced"
-            const isAdvanced = group.name && group.name.toLowerCase().includes("advanced");
+                if (!(group.name in collapsedGroups)) {
+                    collapsedGroups[group.name] = !isAdvanced; // collapsed unless advanced
+                    localStorage.setItem("collapsedGroups", JSON.stringify(collapsedGroups));
+                }
 
-            // if no saved state, collapse by default unless it's Advanced
-            if (!(group.name in collapsedGroups)) {
-                collapsedGroups[group.name] = !isAdvanced; // collapsed unless advanced
-                localStorage.setItem("collapsedGroups", JSON.stringify(collapsedGroups));
-            }
+                const isCollapsed = collapsedGroups[group.name] || false;
+                const sorted = [...group.moves].sort(sortModes[currentSort].fn);
 
-            const isCollapsed = collapsedGroups[group.name] || false;
-            const sorted = [...group.moves].sort(sortModes[currentSort].fn);
+                const groupHTML = `
+                <div class="move-group ${isCollapsed ? "collapsed" : ""}" data-group="${group.name}">
+                    <h3 class="group-header ${isCollapsed ? "collapsed" : ""}" data-group="${group.name}">
+                    ${group.name}
+                    <div class="group-actions">
+                        <span class="material-symbols-rounded toggle-group" title="Toggle all">select_all</span>
+                        <span class="material-symbols-rounded collapse-icon">expand_less</span>
+                    </div>
+                    </h3>
+                    <div class="group-moves${isCollapsed ? "" : " expanded"}">
+                        ${sorted.map(m => `
+                        <label class="move-item">
+                            <div class="checkbox-wrapper">
+                            <input type="checkbox" data-move="${m.name}" ${enabledMoves[m.name] ? "checked" : ""}>
+                            <span class="checkbox-custom"></span>
+                            </div>
+                            <span class="move-name">${m.name}</span>
+                            <span class="move-meta">
+                            ${m.semi ? '<span class="semi-indicator" title="Can be semi"></span>' : ''}
+                            <span class="move-date">
+                                ${m.date
+                        ? new Date(m.date).toLocaleDateString("en-US", { month: "2-digit", day: "2-digit" })
+                        : "—"}
+                            </span>
+                            </span>
+                        </label>
+                        `).join("")}
+                    </div>
+                </div>`;
+                moveListEl.insertAdjacentHTML("beforeend", groupHTML);
+            });
+        } else {
+            const allMoves = moveGroups.flatMap(g => g.moves);
+            const sorted = [...allMoves].sort(sortModes[currentSort].fn);
 
             const groupHTML = `
-        <div class="move-group ${isCollapsed ? "collapsed" : ""}" data-group="${group.name}">
-            <h3 class="group-header ${isCollapsed ? "collapsed" : ""}" data-group="${group.name}">
-            ${group.name}
-            <div class="group-actions">
-                <span class="material-symbols-rounded toggle-group" title="Toggle all">select_all</span>
-                <span class="material-symbols-rounded collapse-icon">expand_less</span>
-            </div>
-            </h3>
-            <div class="group-moves${isCollapsed ? "" : " expanded"}">
+            <div class="move-group expanded" data-group="all">
+                <h3 class="group-header">All Moves</h3>
+                <div class="group-moves expanded">
                 ${sorted.map(m => `
-                <label class="move-item">
+                    <label class="move-item">
                     <div class="checkbox-wrapper">
-                    <input type="checkbox" data-move="${m.name}" ${enabledMoves[m.name] ? "checked" : ""}>
-                    <span class="checkbox-custom"></span>
+                        <input type="checkbox" data-move="${m.name}" ${enabledMoves[m.name] ? "checked" : ""}>
+                        <span class="checkbox-custom"></span>
                     </div>
                     <span class="move-name">${m.name}</span>
                     <span class="move-meta">
@@ -139,13 +181,12 @@ window.addEventListener("DOMContentLoaded", () => {
                     ? new Date(m.date).toLocaleDateString("en-US", { month: "2-digit", day: "2-digit" })
                     : "—"}
                     </span>
-                    </span>
-                </label>
+                    </label>
                 `).join("")}
-            </div>
-        </div>`;
+                </div>
+            </div>`;
             moveListEl.insertAdjacentHTML("beforeend", groupHTML);
-        });
+        }
 
         function toggleHeight(el, expand) {
             if (expand) {
@@ -328,15 +369,15 @@ window.addEventListener("DOMContentLoaded", () => {
             const icon = randomizeBtn.querySelector(".material-symbols-rounded");
             if (icon) icon.classList.remove("spin");
 
-            // sort button visibility
+            // visibility
             if (tab === "tab-settings") {
                 sortBtn.style.visibility = "visible";
-                // show semi container
+                groupToggleBtn.style.visibility = "visible";
                 semiContainer.classList.add("visible");
             } else {
                 sortBtn.style.visibility = "hidden";
                 sortMenu.classList.add("hidden");
-                // hide semi container
+                groupToggleBtn.style.visibility = "hidden";
                 semiContainer.classList.remove("visible");
             }
         });

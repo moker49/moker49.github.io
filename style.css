@@ -64,9 +64,8 @@ body {
   overflow: hidden;
 }
 
-/* ---------- Titlebar ---------- */
+/* ---------- Topbar ---------- */
 .topbar {
-  flex: 0 0 auto;
   background: var(--elev-05);
   display: flex;
   align-items: center;
@@ -74,6 +73,17 @@ body {
   padding: 1rem;
   border-bottom: 1px solid var(--border);
   z-index: 100;
+}
+
+.topbar-left{
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.topbar-button-group{
+  display: flex;
+  gap: 0.5rem;
 }
 
 .topbar h1 {
@@ -105,9 +115,12 @@ body {
   transform: scale(0.9);
 }
 
-/* keep your original visibility behavior */
 #sortBtn {
-  visibility: hidden; /* visible only on settings tab */
+  visibility: hidden;
+}
+
+#groupToggleBtn {
+  visibility: hidden;
 }
 
 /* ---------- Sort Menu ---------- */
