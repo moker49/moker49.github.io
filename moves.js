@@ -84,14 +84,14 @@ const moveGroups = [
             { name: "CBL (double pump)", semi: false, date: '2025-11-08T12:00:00' },
             { name: "CBL (figure 8)", semi: false, date: '2025-11-05T12:00:00' },
             { name: "CBL (inside left)", semi: false, date: '2025-10-25T12:00:00' },
-            { name: "CBL ()", semi: false, date: '2025-11-15T12:00:00' },
+            { name: "CBL (two hands)", semi: false, date: '2025-11-15T12:00:00' },
             { name: "Cross Body Lead (M)", semi: false, date: '2025-10-18T12:00:00' },
             { name: "Full Axle Right Turn", semi: false, date: '2025-10-22T12:00:00' },
             { name: "Half Right Half Left", semi: false, date: '2025-10-15T12:00:00' },
             { name: "Half Left Back Charge", semi: false, date: null },
             { name: "Half Right Back Charge", semi: false, date: null },
             { name: "Left Spot Right Turn (Axel Left)", semi: false, date: null },
-            { name: "Side Charge", semi: false, date: '2025-11-15T12:00:00' },
+            { name: "Side Charge", semi: false, date: '2025-11-12T12:00:00' },
             { name: "Walk Around Left Turn", semi: false, date: '2025-10-29T12:00:00' },
             { name: "3 O'Clock Right Turn", semi: false, date: '2025-10-29T12:00:00' }
         ]
