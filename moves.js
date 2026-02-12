@@ -174,6 +174,18 @@ const moveGroups = [
                     { name: "Reverse Crossover Tap Suzzy,(aka Look Back At It)", semi: false, date: '2026-01-20T12:00:00' },
                     { name: "Mayday", semi: false, date: '2026-01-20T12:00:00' },
                     { name: "Reverse Crossover Tap Suzzy,Mayday", semi: false, date: '2026-01-20T12:00:00' },
+                    { name: "Braid Suzy Grape Vine", semi: false, date: '2026-01-22T12:00:00' },
+                    { name: "Who's On First", semi: false, date: '2026-01-27T12:00:00' },
+                    { name: "Forward Swing (Angry Bird)", semi: false, date: '2026-02-03T12:00:00' },
+                    { name: "Two Corner Swing", semi: false, date: '2026-02-03T12:00:00' },
+                    { name: "Double Heel Toe", semi: false, date: '2026-02-03T12:00:00' },
+                    { name: "Swing Step Right, Left", semi: false, date: '2026-02-05T12:00:00' },
+                    { name: "Side Basic Combo (Basic,Plus,Tap)", semi: false, date: '2026-02-05T12:00:00' },
+                    { name: "Triple Heel Toe Braid", semi: false, date: '2026-02-07T12:00:00' },
+                    { name: "Trap Tap Full Axel Right", semi: false, date: '2026-02-07T12:00:00' },
+                    { name: "Four Corner Swing", semi: false, date: '2026-02-10T12:00:00' },
+                    { name: "Boggler", semi: false, date: '2026-02-10T12:00:00' },
+                    { name: "Short Sailor", semi: false, date: '2026-02-10T12:00:00' },
                 ]
             },
 
@@ -185,6 +197,9 @@ const moveGroups = [
                     { name: "CBL (Shoulder),Lunge (Shoulder Switch),Broken Left (Shoulder),WAL Check,Curfew,Waist CBL", semi: false, date: '2026-01-13T12:00:00' },
                     { name: "CBL (Shoulder),Lunge (Shoulder Same),Broken Left (Shoulder),WAL Check,Curfew,R Waist CBL", semi: false, date: '2026-01-15T12:00:00' },
                     { name: "CBL (Arm Slide),Foosball,Side Charge,Catwalk HL,Booty-Roll,HL", semi: false, date: '2026-01-20T12:00:00' },
+                    { name: "Strong 7", semi: false, date: '2026-01-27T12:00:00' },
+                    { name: "CBL (IL),3OR (grab other hand),single heli,CLB (IL) double heli", semi: false, date: '2026-02-03T12:00:00' },
+                    { name: "CBL (Shoulder),Lunge,1.5 Right", semi: false, date: '2026-02-10T12:00:00' },
                 ]
             }
         ]
