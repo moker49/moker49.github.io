@@ -179,13 +179,18 @@ const moveGroups = [
                     { name: "Forward Swing (Angry Bird)", semi: false, date: '2026-02-03T12:00:00' },
                     { name: "Two Corner Swing", semi: false, date: '2026-02-03T12:00:00' },
                     { name: "Double Heel Toe", semi: false, date: '2026-02-03T12:00:00' },
-                    { name: "Swing Step Right, Left", semi: false, date: '2026-02-05T12:00:00' },
-                    { name: "Side Basic Combo (Basic,Plus,Tap)", semi: false, date: '2026-02-05T12:00:00' },
-                    { name: "Triple Heel Toe Braid", semi: false, date: '2026-02-07T12:00:00' },
-                    { name: "Trap Tap Full Axel Right", semi: false, date: '2026-02-07T12:00:00' },
+                    { name: "Swing Step (Right Left)", semi: false, date: '2026-02-05T12:00:00' },
+                    { name: "Side Basic Combo,(Basic-Plus-Tap)", semi: false, date: '2026-02-05T12:00:00' },
+                    { name: "Triple Heel Toe Braid,(Axle R)", semi: false, date: '2026-02-07T12:00:00' },
+                    { name: "Double-Triple Heel Toe Braid", semi: false, date: '2026-02-07T12:00:00' },
                     { name: "Four Corner Swing", semi: false, date: '2026-02-10T12:00:00' },
                     { name: "Boggler", semi: false, date: '2026-02-10T12:00:00' },
                     { name: "Short Sailor", semi: false, date: '2026-02-10T12:00:00' },
+                    { name: "Standard Sailor", semi: false, date: '2026-02-12T12:00:00' },
+                    { name: "Full Sailor", semi: false, date: '2026-02-12T12:00:00' },
+                    { name: "Sailor Plus", semi: false, date: '2026-02-12T12:00:00' },
+                    { name: "Super Boggler", semi: false, date: '2026-02-12T12:00:00' },
+                    { name: "Sailor Heiarchy", semi: false, date: '2026-02-12T12:00:00' },
                 ]
             },
 
@@ -200,6 +205,7 @@ const moveGroups = [
                     { name: "Strong 7", semi: false, date: '2026-01-27T12:00:00' },
                     { name: "CBL (IL),3OR (grab other hand),single heli,CLB (IL) double heli", semi: false, date: '2026-02-03T12:00:00' },
                     { name: "CBL (Shoulder),Lunge,1.5 Right", semi: false, date: '2026-02-10T12:00:00' },
+                    { name: "?", semi: false, date: '2026-02-12T12:00:00' },
                 ]
             }
         ]
