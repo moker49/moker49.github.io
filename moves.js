@@ -50,7 +50,7 @@ const moveGroups = [
                     { name: "Single Tap Crossover Slide", semi: true, date: "2025-11-19T12:00:02" },
                     { name: "Single Tap Crossover Slide Plus", semi: true, date: "2025-11-22T12:00:02" },
                     { name: "Suzy Cross Suzy", semi: true, date: "2025-10-11T12:00:00" },
-                    { name: "Suzy Cross Suzy With A Turn", semi: true, date: "2025-10-25T12:00:00" },
+                    { name: "Suzy Cross Suzy w/Turn", semi: true, date: "2025-10-25T12:00:00" },
                     { name: "Suzy Q Hook Combo", semi: true, date: "2025-10-08T12:00:01" }
                 ]
             },
@@ -60,7 +60,7 @@ const moveGroups = [
                 moves: [
                     { name: "Angle Slave", semi: true, date: '2025-11-15T12:00:02' },
                     { name: "Downtown", semi: true, date: '2025-10-11T12:00:01' },
-                    { name: "Downtown with a Turn", semi: true, date: '2025-10-25T12:00:01' },
+                    { name: "Downtown w/Turn", semi: true, date: '2025-10-25T12:00:01' },
                     { name: "Four Tap V", semi: true, date: '2025-10-29T12:00:01' },
                     { name: "Hook Flick", semi: true, date: '2025-11-04T12:00:00' },
                     { name: "Inverted Suzy Plus", semi: true, date: '2025-10-25T12:00:02' },
@@ -191,6 +191,8 @@ const moveGroups = [
                     { name: "Sailor Plus", semi: false, date: '2026-02-12T12:00:02' },
                     { name: "Super Boggler", semi: false, date: '2026-02-12T12:00:03' },
                     { name: "Sailor Heiarchy", semi: false, date: '2026-02-12T12:00:04' },
+                    { name: "Half Swing", semi: false, date: '2026-02-16T12:00:00' },
+                    { name: "Side Swing,Half Swing w/Turn", semi: false, date: '2026-02-16T12:00:01' },
                 ]
             },
 
@@ -205,7 +207,8 @@ const moveGroups = [
                     { name: "Strong 7", semi: false, date: '2026-01-27T12:00:01' },
                     { name: "CBL (IL),3OR (grab other hand),single heli,CLB (IL) double heli", semi: false, date: '2026-02-03T12:00:03' },
                     { name: "CBL (Shoulder),Lunge,1.5 Right", semi: false, date: '2026-02-10T12:00:03' },
-                    { name: "?", semi: false, date: '2026-02-12T12:00:05' },
+                    { name: "Right,Fan Arm Left, Throw Arm into sky spin", semi: false, date: '2026-02-14T12:00:00' },
+                    { name: "?", semi: false, date: '2026-02-16T12:00:02' },
                 ]
             }
         ]
